@@ -34,7 +34,7 @@ Display a featured product banner on the homepage.
   ```
   {
     "require": {
-      "rostiknaz/magento2-custom-catalog": "1.0.0"
+      "rostiknaz/magento2-featured-product": "1.0.0"
     }
   }
   ```
