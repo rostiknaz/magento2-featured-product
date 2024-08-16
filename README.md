@@ -9,7 +9,7 @@ Display a featured product banner on the homepage.
 * Registering the module git repository
 
   ```sh
-  $ composer config repositories.rostiknaz-magento2-custom-catalog git git@github.com:rostiknaz/magento2-custom-catalog.git
+  $ composer config repositories.rostiknaz-magento2-featured-product git git@github.com:rostiknaz/magento2-featured-product.git
   ```
   Composer will register a new repository to composer.json (under “repositories” node). Updated composer.json looks like:
 
@@ -27,7 +27,7 @@ Display a featured product banner on the homepage.
 * Registering the module package itself
 
   ```
-  $ composer require rostiknaz/magento2-custom-catalog:1.0.0
+  $ composer require rostiknaz/magento2-featured-product:1.0.0
   ```
   This will add a new dependent package under node “require” and run installation process:
 
