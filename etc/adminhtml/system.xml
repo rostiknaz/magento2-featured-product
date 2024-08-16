@@ -1,0 +1,23 @@
+<?xml version="1.0"?>
+<config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:noNamespaceSchemaLocation="urn:magento:module:Magento_Config:etc/system_file.xsd">
+    <system>
+        <tab id="rnazy" translate="label" sortOrder="10">
+            <label>RNazy</label>
+        </tab>
+        <section id="rnazy_featured_product" sortOrder="10" showInWebsite="0" showInStore="0" showInDefault="1" translate="label">
+            <label>Featured Product</label>
+            <tab>rnazy</tab>
+            <resource>Rnazy_FeaturedProduct::config</resource>
+            <group id="general" sortOrder="10" showInWebsite="0" showInStore="0" showInDefault="1" translate="label">
+                <label>General</label>
+                <field id="product_sku" type="text" sortOrder="10" showInWebsite="0" showInStore="0" showInDefault="1" translate="label" canRestore="1">
+                    <label>Product SKU</label>
+                    <can_be_empty>1</can_be_empty>
+                    <backend_model>Rnazy\FeaturedProduct\Model\Config\Backend\ProductSku</backend_model>
+                    <comment><![CDATA[Insert single product SKU which will be shown on a homepage as Featured Product. If field is empty then block won't be shown.]]></comment>
+                </field>
+            </group>
+        </section>
+    </system>
+</config>

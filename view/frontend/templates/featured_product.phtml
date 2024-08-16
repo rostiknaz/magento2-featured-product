@@ -1,0 +1,53 @@
+<?php
+declare(strict_types=1);
+
+use Hyva\Theme\Model\ViewModelRegistry;
+use Hyva\Theme\ViewModel\ProductListItem;
+use Hyva\Theme\ViewModel\ProductPage;
+use Magento\Framework\Escaper;
+use Magento\Catalog\Helper\Output as CatalogOutputHelper;
+use Rnazy\FeaturedProduct\Block\FeaturedProduct;
+
+/** @var FeaturedProduct $block */
+/** @var Escaper $escaper */
+/** @var ViewModelRegistry $viewModels */
+
+/** @var CatalogOutputHelper $catalogOutputHelper */
+$catalogOutputHelper = $this->helper(CatalogOutputHelper::class);
+
+/** @var ProductListItem $productListItemViewModel */
+$productListItemViewModel = $viewModels->require(ProductListItem::class);
+
+/** @var ProductPage $productViewModel */
+$productViewModel = $viewModels->require(ProductPage::class);
+
+$product = $block->getProduct();
+$productName = $catalogOutputHelper->productAttribute($product, $product->getName(), 'name');
+?>
+<div class="container relative px-5">
+    <div class="container flex flex-col items-center pt-6 pb-3 mx-auto mb-6 border-b-2 border-gray-300 md:flex-row">
+        <h3 class="text-2xl font-medium text-gray-900 title-font">
+            <?= $escaper->escapeHtml(__('Featured Product')) ?>
+        </h3>
+    </div>
+    <div class="flex flex-col items-center bg-white border border-gray-200 rounded-lg shadow md:flex-row md:max-w-xl">
+        <?= $block->getBaseImageBlock($product)->toHtml() ?>
+        <div class="relative w-full overflow-x-hidden">
+            <div class="flex flex-col justify-between p-4 leading-normal">
+                <h5 class="mb-2 text-2xl font-bold tracking-tight text-gray-900 dark:text-white">
+                    <?= /* @noEscape */ $productName ?>
+                </h5>
+                <p class="mb-3 font-normal text-gray-700 dark:text-gray-400">
+                    <?= /* @noEscape */ $productViewModel->getShortDescriptionForProduct($product) ?>
+                </p>
+                <div class="mb-2">
+                    <?= /* @noEscape */ $productListItemViewModel->getProductPriceHtml($product) ?>
+                </div>
+                <a class="justify-center md:w-1/2 w-full mr-auto btn btn-primary" href="<?= $escaper->escapeUrl($product->getProductUrl()) ?>">
+                    <span class="inline"><?= $escaper->escapeHtml(__('View')) ?></span>
+                </a>
+            </div>
+        </div>
+    </div>
+</div>
+
