@@ -27,14 +27,14 @@ Display a featured product banner on the homepage.
 * Registering the module package itself
 
   ```
-  $ composer require rostiknaz/magento2-featured-product:1.0.0
+  $ composer require rostiknaz/magento2-featured-product:1.0.1
   ```
   This will add a new dependent package under node “require” and run installation process:
 
   ```
   {
     "require": {
-      "rostiknaz/magento2-featured-product": "1.0.0"
+      "rostiknaz/magento2-featured-product": "1.0.1"
     }
   }
   ```

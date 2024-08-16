@@ -3,7 +3,9 @@ declare(strict_types=1);
 
 namespace Rnazy\FeaturedProduct\Model\Config\Backend;
 
+use Magento\Catalog\Api\Data\ProductInterfaceFactory;
 use Magento\Catalog\Api\ProductRepositoryInterface;
+use Magento\Catalog\Model\Product;
 use Magento\Framework\App\Cache\TypeListInterface;
 use Magento\Framework\App\Config\ScopeConfigInterface;
 use Magento\Framework\App\Config\Value;
@@ -54,7 +56,14 @@ class ProductSku extends Value
     {
         if ($this->isValueChanged()) {
             // throws an exception if product sku does not exist
-            $this->productRepository->get($this->getValue());
+            /** @var Product $product */
+            $product = $this->productRepository->get($this->getValue());
+
+            if (!$product->isSaleable()) {
+                throw new LocalizedException(
+                    __('Product "%1" is not saleable. Verify the product and try again.', $this->getValue())
+                );
+            }
         }
     }
 }
