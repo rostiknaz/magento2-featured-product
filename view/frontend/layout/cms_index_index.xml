@@ -5,6 +5,7 @@
             <block class="Rnazy\FeaturedProduct\Block\FeaturedProduct"
                    name="featured_product"
                    template="Rnazy_FeaturedProduct::featured_product.phtml"
+                   ifconfig="rnazy_featured_product/general/enabled"
             />
         </referenceContainer>
     </body>

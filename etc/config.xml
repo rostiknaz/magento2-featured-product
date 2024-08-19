@@ -4,6 +4,7 @@
     <default>
         <rnazy_featured_product>
             <general>
+                <enabled>0</enabled>
                 <product_sku/>
             </general>
         </rnazy_featured_product>

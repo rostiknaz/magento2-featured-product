@@ -9,16 +9,14 @@ use Magento\Catalog\Block\Product\Image;
 use Magento\Catalog\Block\Product\ImageFactory as ProductImageFactory;
 use Magento\Catalog\Model\Product;
 use Magento\Catalog\Model\ProductFactory;
-use Magento\Framework\App\Config\ScopeConfigInterface;
 use Magento\Framework\DataObject\IdentityInterface;
 use Magento\Framework\Exception\LocalizedException;
 use Magento\Framework\View\Element\Template;
+use Rnazy\FeaturedProduct\Model\ConfigProvider;
 
 class FeaturedProduct extends Template implements IdentityInterface
 {
-    public const PRODUCT_SKU_CONFIG_PATH = 'rnazy_featured_product/general/product_sku';
-
-    protected ScopeConfigInterface $config;
+    private ConfigProvider $config;
 
     protected ProductImageFactory $productImageFactory;
 
@@ -29,7 +27,7 @@ class FeaturedProduct extends Template implements IdentityInterface
     private ?ProductInterface $product = null;
 
     public function __construct(
-        ScopeConfigInterface $config,
+        ConfigProvider $configProvider,
         ProductImageFactory $productImageFactory,
         ProductRepositoryInterface $productRepository,
         ProductFactory $productFactory,
@@ -40,7 +38,7 @@ class FeaturedProduct extends Template implements IdentityInterface
         $this->productImageFactory = $productImageFactory;
         $this->productRepository = $productRepository;
         $this->productFactory = $productFactory;
-        $this->config = $config;
+        $this->config = $configProvider;
     }
 
     /**
@@ -49,7 +47,7 @@ class FeaturedProduct extends Template implements IdentityInterface
     public function getProduct(): ProductInterface
     {
         if (!$this->product || !$this->product->getId()) {
-            $sku = (string) $this->config->getValue(self::PRODUCT_SKU_CONFIG_PATH);
+            $sku = $this->config->getProductSku();
 
             try {
                 if (empty($sku)) {
@@ -92,6 +90,10 @@ class FeaturedProduct extends Template implements IdentityInterface
      */
     protected function _toHtml(): string
     {
+        if (!$this->config->isEnabled()) {
+            return '';
+        }
+
         $product = $this->getProduct();
 
         if (!$product->getId() || !$product->isSalable()) {

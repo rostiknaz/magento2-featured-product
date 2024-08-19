@@ -3,7 +3,6 @@ declare(strict_types=1);
 
 namespace Rnazy\FeaturedProduct\Model\Config\Backend;
 
-use Magento\Catalog\Api\Data\ProductInterfaceFactory;
 use Magento\Catalog\Api\ProductRepositoryInterface;
 use Magento\Catalog\Model\Product;
 use Magento\Framework\App\Cache\TypeListInterface;
@@ -54,14 +53,16 @@ class ProductSku extends Value
      */
     public function validateSku(): void
     {
-        if ($this->isValueChanged()) {
+        $sku = $this->getValue();
+
+        if ($this->isValueChanged() && !empty($sku)) {
             // throws an exception if product sku does not exist
             /** @var Product $product */
-            $product = $this->productRepository->get($this->getValue());
+            $product = $this->productRepository->get($sku);
 
             if (!$product->isSaleable()) {
                 throw new LocalizedException(
-                    __('Product "%1" is not saleable. Verify the product and try again.', $this->getValue())
+                    __('Product "%1" is not saleable. Verify the product and try again.', $sku)
                 );
             }
         }
